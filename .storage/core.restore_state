@@ -1,0 +1,316 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "core.restore_state",
+  "data": [
+    {
+      "state": {"entity_id":"update.home_assistant_supervisor_update","state":"off","attributes":{"auto_update":true,"display_precision":0,"installed_version":"2026.06.2","in_progress":false,"latest_version":"2026.06.2","release_summary":null,"release_url":"https://github.com/home-assistant/supervisor/releases/tag/2026.06.2","skipped_version":null,"title":"Home Assistant Supervisor","update_percentage":null,"entity_picture":"/api/brands/integration/hassio/icon.png?placeholder=no","friendly_name":"Home Assistant Supervisor Update","supported_features":5},"last_changed":"2026-07-02T02:22:51.128481+00:00","last_reported":"2026-07-02T02:22:51.128481+00:00","last_updated":"2026-07-02T02:22:51.128481+00:00","context":{"id":"01KWGA5P7RZEQBEJRH4SZZRDM9","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"update.home_assistant_core_update","state":"on","attributes":{"auto_update":false,"display_precision":0,"installed_version":"2026.6.4","in_progress":false,"latest_version":"2026.7.0","release_summary":null,"release_url":"https://www.home-assistant.io/latest-release-notes/","skipped_version":null,"title":"Home Assistant Core","update_percentage":null,"entity_picture":"/api/brands/integration/homeassistant/icon.png?placeholder=no","friendly_name":"Home Assistant Core Update","supported_features":15},"last_changed":"2026-07-02T02:22:51.128902+00:00","last_reported":"2026-07-02T02:22:51.128902+00:00","last_updated":"2026-07-02T02:22:51.128902+00:00","context":{"id":"01KWGA5P7RGQ8T8Z2HGXS8J4MY","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"update.home_assistant_operating_system_update","state":"off","attributes":{"auto_update":false,"display_precision":0,"installed_version":"18.1","in_progress":false,"latest_version":"18.1","release_summary":null,"release_url":"https://github.com/home-assistant/operating-system/releases/tag/18.1","skipped_version":null,"title":"Home Assistant Operating System","update_percentage":null,"entity_picture":"/api/brands/integration/homeassistant/icon.png?placeholder=no","friendly_name":"Home Assistant Operating System Update","supported_features":11},"last_changed":"2026-07-02T02:22:51.129135+00:00","last_reported":"2026-07-02T02:22:51.129135+00:00","last_updated":"2026-07-02T02:22:51.129135+00:00","context":{"id":"01KWGA5P7SQ89FX1PSA7NDDCNP","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"conversation.home_assistant","state":"2026-07-02T18:24:38.206240+00:00","attributes":{"friendly_name":"Home Assistant","supported_features":1},"last_changed":"2026-07-02T18:24:38.206267+00:00","last_reported":"2026-07-02T18:24:38.206267+00:00","last_updated":"2026-07-02T18:24:38.206267+00:00","context":{"id":"01KWJ16N5QPE5MRK0G3KM20W6J","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"event.backup_automatic_backup","state":"2026-07-02T19:11:50.478+00:00","attributes":{"event_types":["completed","failed","in_progress"],"event_type":"completed","backup_stage":null,"failed_reason":null,"friendly_name":"Backup Automatic backup"},"last_changed":"2026-07-02T19:11:50.478251+00:00","last_reported":"2026-07-02T19:11:50.478251+00:00","last_updated":"2026-07-02T19:11:50.478251+00:00","context":{"id":"01KWJ3X6PE2YQZWVJB5ASSQVKK","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "last_event_type": "completed",
+        "last_event_attributes": {
+          "backup_stage": null,
+          "failed_reason": null
+        }
+      },
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"person.nictarsmith","state":"unknown","attributes":{"editable":true,"id":"nictarsmith","device_trackers":[],"in_zones":[],"user_id":"3e53d7056de3499eaac053cd7bd79f94","friendly_name":"nictarsmith"},"last_changed":"2026-07-02T02:22:51.624502+00:00","last_reported":"2026-07-02T02:22:52.503881+00:00","last_updated":"2026-07-02T02:22:52.503881+00:00","context":{"id":"01KWGA5QJQ5Z1MDPTY8ZQ227E3","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"tts.google_translate_en_com","state":"unknown","attributes":{"friendly_name":"Google Translate en com"},"last_changed":"2026-07-02T02:22:52.452999+00:00","last_reported":"2026-07-02T02:22:52.452999+00:00","last_updated":"2026-07-02T02:22:52.452999+00:00","context":{"id":"01KWGA5QH43CMDNQ7ZB73YMV6G","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"select.home_assistant_voice_09f281_assistant","state":"Full local assistant","attributes":{"options":["preferred","Focused local assistant","Full local assistant","Home Assistant"],"friendly_name":"Tarrayna's Assistant Assistant"},"last_changed":"2026-07-02T02:28:26.710666+00:00","last_reported":"2026-07-02T03:50:58.685109+00:00","last_updated":"2026-07-02T03:50:16.321520+00:00","context":{"id":"01KWGF5RG139E2CXX471Q24YG0","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"select.home_assistant_voice_09f281_assistant_2","state":"preferred","attributes":{"options":["preferred","Focused local assistant","Full local assistant","Home Assistant"],"friendly_name":"Tarrayna's Assistant Assistant 2"},"last_changed":"2026-07-02T02:25:14.724895+00:00","last_reported":"2026-07-02T03:50:58.685170+00:00","last_updated":"2026-07-02T03:50:16.321884+00:00","context":{"id":"01KWGF5RG1DFXARNDJ96G0E5A4","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"select.home_assistant_voice_09f281_finished_speaking_detection","state":"default","attributes":{"options":["default","relaxed","aggressive"],"friendly_name":"Tarrayna's Assistant Finished speaking detection"},"last_changed":"2026-07-02T02:25:14.725082+00:00","last_reported":"2026-07-02T02:30:49.655623+00:00","last_updated":"2026-07-02T02:30:49.655623+00:00","context":{"id":"01KWGAM9HQ7YCM3E2REMA685KJ","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"select.home_assistant_voice_09f281_wake_word","state":"Hey Jarvis","attributes":{"options":["no_wake_word","Hey Jarvis","Hey Mycroft","Okay Nabu"],"friendly_name":"Tarrayna's Assistant Wake word"},"last_changed":"2026-07-02T17:42:13.459740+00:00","last_reported":"2026-07-02T17:42:13.459740+00:00","last_updated":"2026-07-02T17:42:13.459740+00:00","context":{"id":"01KWHYS3PKXHJCQ0K8DDR64TVV","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"select.home_assistant_voice_09f281_wake_word_2","state":"no_wake_word","attributes":{"options":["no_wake_word","Hey Jarvis","Hey Mycroft","Okay Nabu"],"friendly_name":"Tarrayna's Assistant Wake word 2"},"last_changed":"2026-07-02T02:25:14.836333+00:00","last_reported":"2026-07-02T02:30:49.655766+00:00","last_updated":"2026-07-02T02:30:49.655766+00:00","context":{"id":"01KWGAM9HQ7BMKGFTYCCQ5228C","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"update.home_assistant_voice_09f281","state":"off","attributes":{"auto_update":false,"display_precision":0,"installed_version":"26.6.0","in_progress":false,"latest_version":"26.6.0","release_summary":null,"release_url":"https://github.com/esphome/home-assistant-voice-pe/releases/tag/26.6.0","skipped_version":null,"title":"Nabu Casa.Home Assistant Voice PE","update_percentage":null,"entity_picture":"/api/brands/integration/esphome/icon.png","friendly_name":"Tarrayna's Assistant","supported_features":21},"last_changed":"2026-07-02T17:42:13.476018+00:00","last_reported":"2026-07-02T17:42:13.476018+00:00","last_updated":"2026-07-02T17:42:13.476018+00:00","context":{"id":"01KWHYS3Q4CQDYS9PZ81DY0XPW","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"event.home_assistant_voice_09f281_button_press","state":"unknown","attributes":{"event_types":["double_press","triple_press","long_press","easter_egg_press"],"event_type":null,"device_class":"button","icon":"mdi:button-pointer","friendly_name":"Tarrayna's Assistant Button press"},"last_changed":"2026-07-02T17:42:13.443978+00:00","last_reported":"2026-07-02T17:42:13.443978+00:00","last_updated":"2026-07-02T17:42:13.443978+00:00","context":{"id":"01KWHYS3P3XPKQY71RDTRWC2ND","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "last_event_type": null,
+        "last_event_attributes": null
+      },
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"stt.faster_whisper","state":"unknown","attributes":{"friendly_name":"faster-whisper"},"last_changed":"2026-07-02T02:28:24.599643+00:00","last_reported":"2026-07-02T02:28:24.599744+00:00","last_updated":"2026-07-02T02:28:24.599643+00:00","context":{"id":"01KWGAFVWQ9VKMG34PQCCRA4ZF","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"stt.onnx_asr","state":"unknown","attributes":{"friendly_name":"onnx-asr"},"last_changed":"2026-07-02T02:44:26.729449+00:00","last_reported":"2026-07-02T02:44:26.729602+00:00","last_updated":"2026-07-02T02:44:26.729449+00:00","context":{"id":"01KWGBD7F9B6ZZ2J1VRDHHB6XJ","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"event.master_bedroom_master_switch_button_1","state":"2026-07-02T17:43:47.509+00:00","attributes":{"event_types":["initial_press","repeat","short_release","long_press","long_release"],"event_type":"short_release","device_class":"button","friendly_name":"Master Switch Button 1"},"last_changed":"2026-07-02T17:43:47.509381+00:00","last_reported":"2026-07-02T17:43:47.509566+00:00","last_updated":"2026-07-02T17:43:47.509566+00:00","context":{"id":"01KWHYVZHN1XPHQ3ZKB2F14SR7","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "last_event_type": "short_release",
+        "last_event_attributes": null
+      },
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"event.office_office_switch_button_1","state":"2026-07-02T17:43:47.511+00:00","attributes":{"event_types":["initial_press","repeat","short_release","long_press","long_release"],"event_type":"short_release","device_class":"button","friendly_name":"Office Switch Button 1"},"last_changed":"2026-07-02T17:43:47.511298+00:00","last_reported":"2026-07-02T17:43:47.511298+00:00","last_updated":"2026-07-02T17:43:47.511298+00:00","context":{"id":"01KWHYVZHQGB66ZJHVM8VJ4BY0","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "last_event_type": "short_release",
+        "last_event_attributes": null
+      },
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"event.living_room_living_room_switch_button_1","state":"unknown","attributes":{"event_types":["initial_press","repeat","short_release","long_press","long_release"],"event_type":null,"device_class":"button","friendly_name":"Living Room Switch Button 1"},"last_changed":"2026-07-02T02:46:21.917130+00:00","last_reported":"2026-07-02T02:46:21.917266+00:00","last_updated":"2026-07-02T02:46:21.917130+00:00","context":{"id":"01KWGBGQYX2HTV5BFTD2Q3TG71","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "last_event_type": null,
+        "last_event_attributes": null
+      },
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"event.living_room_living_room_switch_rotary","state":"unknown","attributes":{"event_types":["clock_wise","counter_clock_wise"],"event_type":null,"device_class":"button","friendly_name":"Living Room Switch Rotary"},"last_changed":"2026-07-02T02:46:21.917829+00:00","last_reported":"2026-07-02T02:46:21.917966+00:00","last_updated":"2026-07-02T02:46:21.917829+00:00","context":{"id":"01KWGBGQYXN451SX7VAKGYDA9J","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "last_event_type": null,
+        "last_event_attributes": null
+      },
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"event.master_bedroom_master_switch_rotary","state":"2026-07-02T17:43:47.497+00:00","attributes":{"event_types":["clock_wise","counter_clock_wise"],"event_type":"clock_wise","duration":400,"steps":28,"action":"start","device_class":"button","friendly_name":"Master Switch Rotary"},"last_changed":"2026-07-02T17:43:47.497687+00:00","last_reported":"2026-07-02T17:43:47.497687+00:00","last_updated":"2026-07-02T17:43:47.497687+00:00","context":{"id":"01KWHYVZH9GVGCK2B8S69RMKN9","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "last_event_type": "clock_wise",
+        "last_event_attributes": {
+          "duration": 400,
+          "steps": 28,
+          "action": "start"
+        }
+      },
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"event.office_office_switch_rotary","state":"unknown","attributes":{"event_types":["clock_wise","counter_clock_wise"],"event_type":null,"device_class":"button","friendly_name":"Office Switch Rotary"},"last_changed":"2026-07-02T02:46:21.919139+00:00","last_reported":"2026-07-02T02:46:21.919289+00:00","last_updated":"2026-07-02T02:46:21.919139+00:00","context":{"id":"01KWGBGQYZVASV2J792GPDHF00","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "last_event_type": null,
+        "last_event_attributes": null
+      },
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.office_office_honolulu","state":"2026-07-02T02:48:03.363637+00:00","attributes":{"group_name":"Office","group_type":"room","name":"Honolulu","speed":0.6031746,"brightness":100,"is_dynamic":true,"friendly_name":"Office Honolulu"},"last_changed":"2026-07-02T02:48:03.363661+00:00","last_reported":"2026-07-02T02:48:54.421323+00:00","last_updated":"2026-07-02T02:48:03.363661+00:00","context":{"id":"01KWGBKQJ93VQ1HRF5T46FY6RY","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.master_bedroom_master_bedroom_dimmed","state":"unknown","attributes":{"group_name":"Master Bedroom","group_type":"room","name":"Dimmed","speed":0.603,"brightness":76,"is_dynamic":false,"friendly_name":"Master Bedroom Dimmed"},"last_changed":"2026-07-02T02:46:21.932484+00:00","last_reported":"2026-07-02T02:46:21.932548+00:00","last_updated":"2026-07-02T02:46:21.932484+00:00","context":{"id":"01KWGBGQZCBB83HJZ5FCPF4GZA","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.living_room_living_room_energize","state":"unknown","attributes":{"group_name":"Living room","group_type":"room","name":"Energize","speed":0.603,"brightness":255,"is_dynamic":false,"friendly_name":"Living room Energize"},"last_changed":"2026-07-02T02:46:21.932774+00:00","last_reported":"2026-07-02T02:46:21.932835+00:00","last_updated":"2026-07-02T02:46:21.932774+00:00","context":{"id":"01KWGBGQZCTCET19KDVCNHEY99","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.living_room_living_room_honolulu","state":"unknown","attributes":{"group_name":"Living room","group_type":"room","name":"Honolulu","speed":0.6031746,"brightness":99,"is_dynamic":true,"friendly_name":"Living room Honolulu"},"last_changed":"2026-07-02T02:46:21.933053+00:00","last_reported":"2026-07-02T02:46:21.933110+00:00","last_updated":"2026-07-02T02:46:21.933053+00:00","context":{"id":"01KWGBGQZD8RG1QA6WCMB9A2D1","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.master_bedroom_master_bedroom_bright","state":"unknown","attributes":{"group_name":"Master Bedroom","group_type":"room","name":"Bright","speed":0.603,"brightness":255,"is_dynamic":false,"friendly_name":"Master Bedroom Bright"},"last_changed":"2026-07-02T02:46:21.933317+00:00","last_reported":"2026-07-02T02:46:21.933371+00:00","last_updated":"2026-07-02T02:46:21.933317+00:00","context":{"id":"01KWGBGQZD4E61K9PWYMCYBCQ6","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.office_office_relax","state":"2026-07-02T02:48:54.207282+00:00","attributes":{"group_name":"Office","group_type":"room","name":"Relax","speed":0.603,"brightness":143,"is_dynamic":false,"friendly_name":"Office Relax"},"last_changed":"2026-07-02T02:48:54.207309+00:00","last_reported":"2026-07-02T02:49:22.035694+00:00","last_updated":"2026-07-02T02:48:54.207309+00:00","context":{"id":"01KWGBN77BT8HJTJZRRYB47YMM","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.game_room_game_room_savanna_sunset","state":"unknown","attributes":{"group_name":"Game room","group_type":"room","name":"Savanna sunset","speed":0.6031746,"brightness":148,"is_dynamic":true,"friendly_name":"Game room Savanna sunset"},"last_changed":"2026-07-02T02:46:21.933838+00:00","last_reported":"2026-07-02T02:46:21.933893+00:00","last_updated":"2026-07-02T02:46:21.933838+00:00","context":{"id":"01KWGBGQZD362FQA7SQW6KJSKJ","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.master_bedroom_master_bedroom_rest","state":"unknown","attributes":{"group_name":"Master Bedroom","group_type":"room","name":"Rest","speed":0.603,"brightness":89,"is_dynamic":false,"friendly_name":"Master Bedroom Rest"},"last_changed":"2026-07-02T02:46:21.934097+00:00","last_reported":"2026-07-02T02:46:21.934155+00:00","last_updated":"2026-07-02T02:46:21.934097+00:00","context":{"id":"01KWGBGQZEECA49RAZ1FSFYAE1","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.living_room_living_room_concentrate","state":"unknown","attributes":{"group_name":"Living room","group_type":"room","name":"Concentrate","speed":0.603,"brightness":255,"is_dynamic":false,"friendly_name":"Living room Concentrate"},"last_changed":"2026-07-02T02:46:21.934369+00:00","last_reported":"2026-07-02T02:46:21.934586+00:00","last_updated":"2026-07-02T02:46:21.934369+00:00","context":{"id":"01KWGBGQZEH5VDS1GPXGC7YAZ6","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.master_bedroom_master_bedroom_nightlight","state":"unknown","attributes":{"group_name":"Master Bedroom","group_type":"room","name":"Nightlight","speed":0.603,"brightness":0,"is_dynamic":false,"friendly_name":"Master Bedroom Nightlight"},"last_changed":"2026-07-02T02:46:21.934773+00:00","last_reported":"2026-07-02T02:46:21.934822+00:00","last_updated":"2026-07-02T02:46:21.934773+00:00","context":{"id":"01KWGBGQZETKJCYJA2EJWCHT8E","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.office_office_nightlight","state":"unknown","attributes":{"group_name":"Office","group_type":"room","name":"Nightlight","speed":0.603,"brightness":26,"is_dynamic":false,"friendly_name":"Office Nightlight"},"last_changed":"2026-07-02T02:46:21.934995+00:00","last_reported":"2026-07-02T02:46:21.935042+00:00","last_updated":"2026-07-02T02:46:21.934995+00:00","context":{"id":"01KWGBGQZEKVMPX4F31AKDGHKE","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.game_room_game_room_energize","state":"unknown","attributes":{"group_name":"Game room","group_type":"room","name":"Energize","speed":0.603,"brightness":255,"is_dynamic":false,"friendly_name":"Game room Energize"},"last_changed":"2026-07-02T02:46:21.935210+00:00","last_reported":"2026-07-02T02:46:21.935257+00:00","last_updated":"2026-07-02T02:46:21.935210+00:00","context":{"id":"01KWGBGQZF6M78SQ3R5G8KSA93","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.living_room_living_room_nightlight","state":"unknown","attributes":{"group_name":"Living room","group_type":"room","name":"Nightlight","speed":0.603,"brightness":26,"is_dynamic":false,"friendly_name":"Living room Nightlight"},"last_changed":"2026-07-02T02:46:21.935442+00:00","last_reported":"2026-07-02T02:46:21.935498+00:00","last_updated":"2026-07-02T02:46:21.935442+00:00","context":{"id":"01KWGBGQZFJ08HFCW1WX49W1EA","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.game_room_game_room_magneto","state":"unknown","attributes":{"group_name":"Game room","group_type":"room","name":"Magneto","speed":0.6111111,"brightness":224,"is_dynamic":true,"friendly_name":"Game room Magneto"},"last_changed":"2026-07-02T02:46:21.935680+00:00","last_reported":"2026-07-02T02:46:21.935728+00:00","last_updated":"2026-07-02T02:46:21.935680+00:00","context":{"id":"01KWGBGQZF8Q3R03E6C52PC3TV","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.living_room_living_room_relax","state":"unknown","attributes":{"group_name":"Living room","group_type":"room","name":"Relax","speed":0.603,"brightness":143,"is_dynamic":false,"friendly_name":"Living room Relax"},"last_changed":"2026-07-02T02:46:21.935896+00:00","last_reported":"2026-07-02T02:46:21.935946+00:00","last_updated":"2026-07-02T02:46:21.935896+00:00","context":{"id":"01KWGBGQZFRMMPQK60845EX8YK","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.office_office_concentrate","state":"unknown","attributes":{"group_name":"Office","group_type":"room","name":"Concentrate","speed":0.603,"brightness":255,"is_dynamic":false,"friendly_name":"Office Concentrate"},"last_changed":"2026-07-02T02:46:21.936112+00:00","last_reported":"2026-07-02T02:46:21.936160+00:00","last_updated":"2026-07-02T02:46:21.936112+00:00","context":{"id":"01KWGBGQZG9B3NPCVT6TCVZHJ3","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.living_room_living_room_savanna_sunset","state":"unknown","attributes":{"group_name":"Living room","group_type":"room","name":"Savanna sunset","speed":0.6031746,"brightness":148,"is_dynamic":true,"friendly_name":"Living room Savanna sunset"},"last_changed":"2026-07-02T02:46:21.936319+00:00","last_reported":"2026-07-02T02:46:21.936366+00:00","last_updated":"2026-07-02T02:46:21.936319+00:00","context":{"id":"01KWGBGQZGY9ABZ1QE8FAYYQXS","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.office_office_read","state":"unknown","attributes":{"group_name":"Office","group_type":"room","name":"Read","speed":0.603,"brightness":255,"is_dynamic":false,"friendly_name":"Office Read"},"last_changed":"2026-07-02T02:46:21.936563+00:00","last_reported":"2026-07-02T02:46:21.936609+00:00","last_updated":"2026-07-02T02:46:21.936563+00:00","context":{"id":"01KWGBGQZG04048J6DQMN0J6K5","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.living_room_living_room_read","state":"unknown","attributes":{"group_name":"Living room","group_type":"room","name":"Read","speed":0.603,"brightness":255,"is_dynamic":false,"friendly_name":"Living room Read"},"last_changed":"2026-07-02T02:46:21.936784+00:00","last_reported":"2026-07-02T02:46:21.936834+00:00","last_updated":"2026-07-02T02:46:21.936784+00:00","context":{"id":"01KWGBGQZG2XZ0YQR1RJZP33HF","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"scene.office_office_energize","state":"unknown","attributes":{"group_name":"Office","group_type":"room","name":"Energize","speed":0.603,"brightness":255,"is_dynamic":false,"friendly_name":"Office Energize"},"last_changed":"2026-07-02T02:46:21.936999+00:00","last_reported":"2026-07-02T02:46:21.937047+00:00","last_updated":"2026-07-02T02:46:21.936999+00:00","context":{"id":"01KWGBGQZGD5P9V32J7REE62R8","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"tts.piper_2","state":"2026-07-02T03:50:55.708578+00:00","attributes":{"friendly_name":"piper"},"last_changed":"2026-07-02T03:50:55.708627+00:00","last_reported":"2026-07-02T03:50:55.708627+00:00","last_updated":"2026-07-02T03:50:55.708627+00:00","context":{"id":"01KWGF6YYWC6J60JHJ8PR80PV0","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"tts.kokoro","state":"2026-07-02T02:59:36.373694+00:00","attributes":{"friendly_name":"Kokoro"},"last_changed":"2026-07-02T02:59:36.373722+00:00","last_reported":"2026-07-02T02:59:36.373722+00:00","last_updated":"2026-07-02T02:59:36.373722+00:00","context":{"id":"01KWGC8ZSNWFR69XY1AFR035P7","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"select.home_assistant_voice_0a01a8_assistant","state":"Full local assistant","attributes":{"options":["preferred","Focused local assistant","Full local assistant","Home Assistant"],"friendly_name":"Nick's Assistant Assistant"},"last_changed":"2026-07-02T03:54:41.563120+00:00","last_reported":"2026-07-02T03:54:41.563120+00:00","last_updated":"2026-07-02T03:54:41.563120+00:00","context":{"id":"01KWGFDVGTCD8PHXN5ABDZJ9PD","parent_id":null,"user_id":"3e53d7056de3499eaac053cd7bd79f94"}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"select.home_assistant_voice_0a01a8_assistant_2","state":"preferred","attributes":{"options":["preferred","Focused local assistant","Full local assistant","Home Assistant"],"friendly_name":"Nick's Assistant Assistant 2"},"last_changed":"2026-07-02T03:48:37.558284+00:00","last_reported":"2026-07-02T03:50:59.430499+00:00","last_updated":"2026-07-02T03:50:59.430499+00:00","context":{"id":"01KWGF72K6P76ZSKGAQY4J3ZQ5","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"select.home_assistant_voice_0a01a8_finished_speaking_detection","state":"default","attributes":{"options":["default","relaxed","aggressive"],"friendly_name":"Nick's Assistant Finished speaking detection"},"last_changed":"2026-07-02T03:48:37.558591+00:00","last_reported":"2026-07-02T03:50:59.430572+00:00","last_updated":"2026-07-02T03:50:59.430572+00:00","context":{"id":"01KWGF72K6SXTEDPZJCFC4ANTT","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"select.home_assistant_voice_0a01a8_wake_word","state":"Okay Nabu","attributes":{"options":["no_wake_word","Hey Jarvis","Hey Mycroft","Okay Nabu"],"friendly_name":"Nick's Assistant Wake word"},"last_changed":"2026-07-02T03:48:37.677065+00:00","last_reported":"2026-07-02T03:50:59.430640+00:00","last_updated":"2026-07-02T03:50:59.430640+00:00","context":{"id":"01KWGF72K6WQQGB6X3ACWJ5NBF","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"select.home_assistant_voice_0a01a8_wake_word_2","state":"no_wake_word","attributes":{"options":["no_wake_word","Hey Jarvis","Hey Mycroft","Okay Nabu"],"friendly_name":"Nick's Assistant Wake word 2"},"last_changed":"2026-07-02T03:48:37.677450+00:00","last_reported":"2026-07-02T03:50:59.430695+00:00","last_updated":"2026-07-02T03:50:59.430695+00:00","context":{"id":"01KWGF72K61AB627BJMBCN6HV7","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"update.home_assistant_voice_0a01a8","state":"off","attributes":{"auto_update":false,"display_precision":0,"installed_version":"26.6.0","in_progress":false,"latest_version":"26.6.0","release_summary":null,"release_url":"https://github.com/esphome/home-assistant-voice-pe/releases/tag/26.6.0","skipped_version":null,"title":"Nabu Casa.Home Assistant Voice PE","update_percentage":null,"entity_picture":"/api/brands/integration/esphome/icon.png","friendly_name":"Nick's Assistant","supported_features":21},"last_changed":"2026-07-02T17:42:13.690936+00:00","last_reported":"2026-07-02T17:42:13.690936+00:00","last_updated":"2026-07-02T17:42:13.690936+00:00","context":{"id":"01KWHYS3XTNT6GHYS1RDQ4C8W2","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"event.home_assistant_voice_0a01a8_button_press","state":"unknown","attributes":{"event_types":["double_press","triple_press","long_press","easter_egg_press"],"event_type":null,"device_class":"button","icon":"mdi:button-pointer","friendly_name":"Nick's Assistant Button press"},"last_changed":"2026-07-02T17:42:13.636485+00:00","last_reported":"2026-07-02T17:42:13.636485+00:00","last_updated":"2026-07-02T17:42:13.636485+00:00","context":{"id":"01KWHYS3W45XKFH0FZ59N1YP3P","parent_id":null,"user_id":null}},
+      "extra_data": {
+        "last_event_type": null,
+        "last_event_attributes": null
+      },
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"stt.speech_to_phrase","state":"unknown","attributes":{"friendly_name":"speech-to-phrase"},"last_changed":"2026-07-02T03:50:14.261337+00:00","last_reported":"2026-07-02T03:50:14.261423+00:00","last_updated":"2026-07-02T03:50:14.261337+00:00","context":{"id":"01KWGF5PFNQS0S6SPFWYZJ3F28","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"conversation.ollama_conversation","state":"2026-07-02T18:45:02.244172+00:00","attributes":{"friendly_name":"Ollama Conversation","supported_features":1},"last_changed":"2026-07-02T18:45:02.244205+00:00","last_reported":"2026-07-02T18:45:02.244205+00:00","last_updated":"2026-07-02T18:45:02.244205+00:00","context":{"id":"01KWJ2C04FGTSHEJ5VEGY4T1JK","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"tts.openai","state":"2026-07-02T18:50:41.919297+00:00","attributes":{"friendly_name":"openai"},"last_changed":"2026-07-02T18:50:41.919351+00:00","last_reported":"2026-07-02T18:50:41.919351+00:00","last_updated":"2026-07-02T18:50:41.919351+00:00","context":{"id":"01KWJ2PFVZQAKMTRWFAFF0RZNV","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T19:52:52.562998+00:00"
+    },
+    {
+      "state": {"entity_id":"tts.piper","state":"2026-07-02T02:56:43.094107+00:00","attributes":{"friendly_name":"piper"},"last_changed":"2026-07-02T02:56:43.094157+00:00","last_reported":"2026-07-02T02:56:43.094157+00:00","last_updated":"2026-07-02T02:56:43.094157+00:00","context":{"id":"01KWGC3PJPS6BYM6ZSRZ2WWM88","parent_id":null,"user_id":null}},
+      "extra_data": null,
+      "last_seen": "2026-07-02T02:58:37.072461+00:00"
+    }
+  ]
+}

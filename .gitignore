@@ -1,0 +1,8 @@
+secrets.yaml
+*.db
+*.db-shm
+*.db-wal
+*.log
+*.log.fault
+deps/
+tts/

@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "minor_version": 2,
+  "key": "assist_pipeline.pipelines",
+  "data": {
+    "items": [
+      {
+        "conversation_engine": "conversation.ollama_conversation",
+        "conversation_language": "*",
+        "id": "01kw8rkka40pv65m8ea7wgdefm",
+        "language": "en",
+        "name": "Home Assistant",
+        "stt_engine": "stt.onnx_asr",
+        "stt_language": "en",
+        "tts_engine": "tts.openai",
+        "tts_language": "en",
+        "tts_voice": "tara",
+        "wake_word_entity": null,
+        "wake_word_id": null,
+        "prefer_local_intents": false
+      },
+      {
+        "conversation_engine": "conversation.ollama_conversation",
+        "conversation_language": "*",
+        "id": "01kwgafxy5z0h5d4sqay6b6m46",
+        "language": "en",
+        "name": "Full local assistant",
+        "stt_engine": "stt.onnx_asr",
+        "stt_language": "en",
+        "tts_engine": "tts.openai",
+        "tts_language": "en",
+        "tts_voice": "tara",
+        "wake_word_entity": null,
+        "wake_word_id": null,
+        "prefer_local_intents": false
+      },
+      {
+        "conversation_engine": "conversation.home_assistant",
+        "conversation_language": "en",
+        "id": "01kwgf5rg0fkjwtq2qj1607sgt",
+        "language": "en",
+        "name": "Focused local assistant",
+        "stt_engine": "stt.speech_to_phrase",
+        "stt_language": "en",
+        "tts_engine": "tts.piper_2",
+        "tts_language": "en_US",
+        "tts_voice": "en_US-ryan-high",
+        "wake_word_entity": null,
+        "wake_word_id": null,
+        "prefer_local_intents": false
+      }
+    ],
+    "preferred_item": "01kw8rkka40pv65m8ea7wgdefm"
+  }
+}

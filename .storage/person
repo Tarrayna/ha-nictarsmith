@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "minor_version": 1,
+  "key": "person",
+  "data": {
+    "items": [
+      {
+        "id": "nictarsmith",
+        "name": "nictarsmith",
+        "user_id": "3e53d7056de3499eaac053cd7bd79f94",
+        "device_trackers": [],
+        "picture": null
+      }
+    ]
+  }
+}

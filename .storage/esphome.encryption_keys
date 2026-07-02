@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "esphome.encryption_keys",
+  "data": {
+    "keys": {
+      "20:f8:3b:09:f2:81": "hUUTS/s4p5QdAcE6duv+78rKCMOZsWzEEb9elvwNkm4=",
+      "20:f8:3b:0a:01:a8": "1KpAcI19wqXWbbqL6VnpXlcAEqCusp8481YlwFXMr20="
+    }
+  }
+}

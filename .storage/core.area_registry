@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "minor_version": 9,
+  "key": "core.area_registry",
+  "data": {
+    "areas": [
+      {
+        "aliases": [],
+        "floor_id": null,
+        "humidity_entity_id": null,
+        "icon": null,
+        "id": "garage",
+        "labels": [],
+        "name": "Garage",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2026-06-29T04:01:14.419789+00:00",
+        "modified_at": "2026-06-29T04:01:14.419791+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "humidity_entity_id": null,
+        "icon": null,
+        "id": "game_room",
+        "labels": [],
+        "name": "Game Room",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2026-06-29T04:01:14.548241+00:00",
+        "modified_at": "2026-06-29T04:01:14.548243+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "humidity_entity_id": null,
+        "icon": "mdi:sofa",
+        "id": "living_room",
+        "labels": [],
+        "name": "Living Room",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2026-06-29T04:02:40.994954+00:00",
+        "modified_at": "2026-06-29T04:02:40.994955+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "humidity_entity_id": null,
+        "icon": "mdi:stove",
+        "id": "kitchen",
+        "labels": [],
+        "name": "Kitchen",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2026-06-29T04:02:40.994996+00:00",
+        "modified_at": "2026-06-29T04:02:40.994997+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "humidity_entity_id": null,
+        "icon": "mdi:bed",
+        "id": "bedroom",
+        "labels": [],
+        "name": "Bedroom",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2026-06-29T04:02:40.995012+00:00",
+        "modified_at": "2026-06-29T04:02:40.995013+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": "basement",
+        "humidity_entity_id": null,
+        "icon": "mdi:desktop-classic",
+        "id": "office",
+        "labels": [],
+        "name": "Office",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2026-07-02T02:26:47.580009+00:00",
+        "modified_at": "2026-07-02T02:26:47.580014+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "humidity_entity_id": null,
+        "icon": null,
+        "id": "master_bedroom",
+        "labels": [],
+        "name": "Master Bedroom",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2026-07-02T02:46:21.875644+00:00",
+        "modified_at": "2026-07-02T02:46:21.875644+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": "basement",
+        "humidity_entity_id": null,
+        "icon": "mdi:server",
+        "id": "server_room",
+        "labels": [],
+        "name": "Server Room",
+        "picture": null,
+        "temperature_entity_id": null,
+        "created_at": "2026-07-02T02:46:38.512221+00:00",
+        "modified_at": "2026-07-02T02:46:38.512226+00:00"
+      }
+    ]
+  }
+}

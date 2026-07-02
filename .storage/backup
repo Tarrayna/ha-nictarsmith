@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "minor_version": 7,
+  "key": "backup",
+  "data": {
+    "backups": [
+      {
+        "backup_id": "1a23b45d",
+        "failed_addons": [],
+        "failed_agent_ids": [],
+        "failed_folders": []
+      },
+      {
+        "backup_id": "7cc966d9",
+        "failed_addons": [],
+        "failed_agent_ids": [],
+        "failed_folders": []
+      },
+      {
+        "backup_id": "fe7d9a64",
+        "failed_addons": [],
+        "failed_agent_ids": [],
+        "failed_folders": []
+      },
+      {
+        "backup_id": "944f3f5b",
+        "failed_addons": [],
+        "failed_agent_ids": [],
+        "failed_folders": []
+      },
+      {
+        "backup_id": "e14ec75c",
+        "failed_addons": [],
+        "failed_agent_ids": [],
+        "failed_folders": []
+      },
+      {
+        "backup_id": "f472df27",
+        "failed_addons": [],
+        "failed_agent_ids": [],
+        "failed_folders": []
+      },
+      {
+        "backup_id": "3645908d",
+        "failed_addons": [],
+        "failed_agent_ids": [
+          "hassio.SynologyNAS"
+        ],
+        "failed_folders": []
+      },
+      {
+        "backup_id": "3d0fa9b7",
+        "failed_addons": [],
+        "failed_agent_ids": [],
+        "failed_folders": []
+      }
+    ],
+    "config": {
+      "agents": {},
+      "automatic_backups_configured": true,
+      "create_backup": {
+        "agent_ids": [
+          "hassio.SynologyNAS",
+          "hassio.local"
+        ],
+        "include_addons": [],
+        "include_all_addons": true,
+        "include_database": true,
+        "include_folders": [
+          "media",
+          "share"
+        ],
+        "name": null,
+        "password": "W489-XEHP-NOPF-4I8R-0Z1M-98ID-JCRD"
+      },
+      "last_attempted_automatic_backup": "2026-07-02T05:04:32.001005-06:00",
+      "last_completed_automatic_backup": "2026-07-01T20:21:52.150525-06:00",
+      "retention": {
+        "copies": null,
+        "days": null
+      },
+      "schedule": {
+        "days": [],
+        "recurrence": "daily",
+        "time": null
+      }
+    }
+  }
+}
