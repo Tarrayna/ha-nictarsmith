@@ -31,3 +31,23 @@
         entity_id: light.office_office
     - set_conversation_response: "Tuna fish. Office lights off."
   mode: single
+
+- id: office_purple_lights
+  alias: Office - Purple lights
+  description: Turns the office lights purple when I say "purple" to the voice assistant
+  triggers:
+    - trigger: conversation
+      command:
+        - "purple"
+        - "make it purple"
+        - "lights purple"
+  conditions: []
+  actions:
+    # "Office" Hue grouped light (covers the whole office)
+    - action: light.turn_on
+      target:
+        entity_id: light.office_office
+      data:
+        rgb_color: [128, 0, 128]
+    - set_conversation_response: "Purple it is."
+  mode: single
