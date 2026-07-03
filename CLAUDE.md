@@ -53,7 +53,11 @@ using assist_satellite.ask_question, general notification automations.
 - When the user confirms they're happy with a change ("looks good",
   "that works", "commit that", etc.), THEN commit with a clear message
   describing what was added/changed
-- Never commit secrets.yaml (already gitignored) or database/log files
+- Push to the private GitHub remote automatically after every commit — the
+  user has standing permission for this and would otherwise forget. Do not
+  wait to be asked.
+- Never commit secrets.yaml (already gitignored) or database/log files, and
+  never commit .storage/ runtime state (auth, entity_registry, restore_state)
 - Suggested commit message format: "Add: <what>" or "Update: <what>" or
   "Fix: <what>"
 
