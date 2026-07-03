@@ -1,1 +1,17 @@
-[]
+- id: office_good_morning_lights
+  alias: Office - Good morning lights on
+  description: Turns on the office lights when I say "good morning" to the voice assistant
+  triggers:
+    - trigger: conversation
+      command:
+        - "good morning"
+        - "good morning [please]"
+        - "morning"
+  conditions: []
+  actions:
+    # "Office" Hue grouped light (covers the whole office)
+    - action: light.turn_on
+      target:
+        entity_id: light.office_office
+    - set_conversation_response: "Good morning! Turning on the office lights."
+  mode: single

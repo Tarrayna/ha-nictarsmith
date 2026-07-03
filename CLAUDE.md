@@ -60,6 +60,22 @@ using assist_satellite.ask_question, general notification automations.
 ## Testing / validation
 - After writing YAML, check it's syntactically valid before considering
   the task done (yamllint if available, or at minimum a visual re-check)
-- Mention to the user that they should reload automations in HA
-  (Settings → Automations & Scenes → ⋮ → Reload) or restart HA if
-  configuration.yaml was touched
+- After editing automations.yaml, reload it yourself via the API (see
+  "Reload automations after changes" below) rather than asking the user to.
+  If configuration.yaml was touched, HA needs a full restart — tell the user.
+
+## Reload automations after changes
+- A long-lived access token is stored at `~/.ha_token` (chmod 600). Do not
+  print, echo, or commit its contents — only reference it via `$(cat ~/.ha_token)`.
+- Reload automations by calling the HA REST API:
+  ```
+  curl -X POST \
+    -H "Authorization: Bearer $(cat ~/.ha_token)" \
+    -H "Content-Type: application/json" \
+    http://192.168.1.100:8123/api/services/automation/reload
+  ```
+- A `200` response with an empty array `[]` in the body means the reload
+  succeeded (the array lists changed states, not an error).
+- Make this a standard step you run automatically after ANY edit to
+  automations.yaml, right before you summarize the change to the user. You
+  own this step now — don't ask the user to reload manually.
