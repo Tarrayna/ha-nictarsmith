@@ -15,3 +15,19 @@
         entity_id: light.office_office
     - set_conversation_response: "Good morning! Turning on the office lights."
   mode: single
+
+- id: office_tuna_fish_lights_off
+  alias: Office - Tuna fish lights off
+  description: Turns off the office lights when I say "tuna fish" to the voice assistant
+  triggers:
+    - trigger: conversation
+      command:
+        - "tuna fish"
+  conditions: []
+  actions:
+    # "Office" Hue grouped light (covers the whole office)
+    - action: light.turn_off
+      target:
+        entity_id: light.office_office
+    - set_conversation_response: "Tuna fish. Office lights off."
+  mode: single
