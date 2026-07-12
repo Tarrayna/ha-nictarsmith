@@ -1,3 +1,11 @@
+# SCRATCH / PROOF-OF-CONCEPT AUTOMATIONS
+#
+# This file is a working area. New automations start here to prove they
+# work end-to-end (trigger fires, actions do the right thing) before being
+# migrated into the appropriate grouped file under automations/ (e.g.
+# office.yaml, living_room.yaml, xbox.yaml). Once something is confirmed
+# working and kept, move its entry out of this file.
+
 - id: office_good_morning_lights
   alias: Office - Good morning lights on
   description: Turns on the office lights when I say "good morning" to the voice assistant

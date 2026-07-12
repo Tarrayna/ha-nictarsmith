@@ -20,7 +20,7 @@ voice prompt asking whether to dim the lights when the Xbox turns on
 using assist_satellite.ask_question, general notification automations.
 
 ## Where you're allowed to touch
-- automations.yaml — yes, freely
+- automations/ — yes, freely (see "Automations file layout" below)
 - scripts.yaml — yes, freely
 - scenes.yaml — yes, with confirmation for anything affecting more than one room
 - configuration.yaml — ONLY with explicit confirmation before editing; this
@@ -29,6 +29,23 @@ using assist_satellite.ask_question, general notification automations.
   needed, tell the user to add it manually and reference the key name only.
 - blueprints/ — yes, freely
 - Any .db, .log, deps/, tts/ files — never touch, these are runtime data
+
+## Automations file layout
+Automations no longer live in a single automations.yaml. configuration.yaml
+loads them via `automation: !include_dir_merge_list automations/`, which
+merges every *.yaml file in that directory into one automation list.
+
+- `automations/poc.yaml` — scratch/proof-of-concept area. Unless a new
+  automation is trivial, build it here first to confirm it actually works
+  (trigger fires, actions do the right thing) before moving it to its
+  permanent home.
+- `automations/<group>.yaml` — grouped by area or purpose once an
+  automation is confirmed working (e.g. office.yaml, living_room.yaml,
+  xbox.yaml). Create a new group file when a natural category emerges;
+  don't force everything into one bucket.
+- When "migrating" an automation out of poc.yaml, cut its entry from
+  poc.yaml and paste it into the appropriate group file in the same edit
+  — don't leave duplicates in both places.
 
 ## Naming conventions
 - Automation IDs: snake_case, prefixed by area/device
@@ -64,9 +81,11 @@ using assist_satellite.ask_question, general notification automations.
 ## Testing / validation
 - After writing YAML, check it's syntactically valid before considering
   the task done (yamllint if available, or at minimum a visual re-check)
-- After editing automations.yaml, reload it yourself via the API (see
-  "Reload automations after changes" below) rather than asking the user to.
-  If configuration.yaml was touched, HA needs a full restart — tell the user.
+- After editing any file under automations/, reload automations yourself via
+  the API (see "Reload automations after changes" below) rather than asking
+  the user to. If configuration.yaml was touched, HA needs a full restart —
+  tell the user and get confirmation before restarting (same as the
+  confirmation needed to edit configuration.yaml in the first place).
 
 ## Reload automations after changes
 - A long-lived access token is stored at `~/.ha_token` (chmod 600). Do not
