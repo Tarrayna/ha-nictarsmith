@@ -1,0 +1,29 @@
+# Board: Generic ESP32 Board (Generic)
+# Definition: definitions/boards/generic-esp32/manifest.yaml
+
+esphome:
+  name: movie-scanner
+  friendly_name: Movie Scanner
+
+esp32:
+  variant: esp32
+  framework:
+    type: esp-idf
+
+logger:
+
+api:
+  encryption:
+    key: "cPtwxIIBJ6eJ1vv46vyKz5MlY6V2sI/qeKp8h+OmVoY="
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: Movie Scanner Fallback Hotspot
+    password: "tWhhamSUjHGi"
+
+captive_portal:
