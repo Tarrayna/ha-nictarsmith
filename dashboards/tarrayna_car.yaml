@@ -55,8 +55,9 @@ views:
           - type: markdown
             content: >
               {% set raw = states('sensor.garage_wican_14c19fd95799_local_01_monitorstatus')|int(0) %}
-              {% set mil_on = (raw // 128) == 1 %}
-              {% set dtc_count = raw % 128 %}
+              {% set byte_a = (raw // 16777216) % 256 %}
+              {% set mil_on = (byte_a // 128) == 1 %}
+              {% set dtc_count = byte_a % 128 %}
               {% if not mil_on and dtc_count == 0 %}
               ## 🟢 No Known Issues
               {% else %}
