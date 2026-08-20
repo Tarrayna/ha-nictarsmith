@@ -27,6 +27,57 @@ input_number:
     step: 0.5
     initial: 54.5
     unit_of_measurement: mpg
+  car_last_service_odometer:
+    name: Odometer at Last Service
+    icon: mdi:counter
+    min: 0
+    max: 300000
+    step: 1
+    initial: 39044
+    unit_of_measurement: mi
+  car_service_interval_miles:
+    name: Service Interval
+    icon: mdi:wrench
+    min: 1000
+    max: 20000
+    step: 500
+    initial: 7500
+    unit_of_measurement: mi
+
+input_datetime:
+  car_last_service_date:
+    name: Car Last Service Date
+    has_date: true
+    has_time: false
+    icon: mdi:wrench-clock
+    initial: "2026-04-01"
+
+template:
+  - sensor:
+      - name: "Car Coolant Temp"
+        unique_id: car_coolant_temp_f
+        unit_of_measurement: "°F"
+        device_class: temperature
+        state_class: measurement
+        state: >
+          {% set c = states('sensor.garage_wican_14c19fd95799_local_05_enginecoolanttemp') %}
+          {{ (c | float * 9/5 + 32) | round(1) if c not in ['unknown','unavailable'] else none }}
+      - name: "Car Catalyst Pre Temp"
+        unique_id: car_cat_pre_temp_f
+        unit_of_measurement: "°F"
+        device_class: temperature
+        state_class: measurement
+        state: >
+          {% set c = states('sensor.garage_wican_14c19fd95799_local_3c_cattempbank1sens1') %}
+          {{ (c | float * 9/5 + 32) | round(1) if c not in ['unknown','unavailable'] else none }}
+      - name: "Car Catalyst Post Temp"
+        unique_id: car_cat_post_temp_f
+        unit_of_measurement: "°F"
+        device_class: temperature
+        state_class: measurement
+        state: >
+          {% set c = states('sensor.garage_wican_14c19fd95799_local_3e_cattempbank1sens2') %}
+          {{ (c | float * 9/5 + 32) | round(1) if c not in ['unknown','unavailable'] else none }}
 
 lovelace:
   dashboards:

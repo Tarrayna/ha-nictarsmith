@@ -64,7 +64,61 @@ views:
               {% endif %}
           - type: entities
             entities:
-              - entity: sensor.garage_wican_14c19fd95799_local_05_enginecoolanttemp
+              - entity: sensor.car_coolant_temp
                 name: Engine Coolant Temp
               - entity: sensor.wican_14c19fd95799_local_batt_voltage
                 name: 12V Battery Voltage
+      - type: grid
+        cards:
+          - type: heading
+            heading: O2 & Catalyst Watch
+          - type: markdown
+            content: >
+              {% set coolant = states('sensor.car_coolant_temp')|float(0) %}
+              {% if coolant < 160 %}
+              ## 🔧 Engine Warming Up
+
+              Readings below aren't meaningful until coolant is warm (closed-loop
+              operation, ~160°F+). Currently {{ coolant }}°F.
+              {% else %}
+              {% set ratio = states('sensor.garage_wican_14c19fd95799_local_34_oxysensor1_faer')|float(1) %}
+              {% set ratio_ok = (ratio - 1) | abs <= 0.15 %}
+              {% set o2v = states('sensor.garage_wican_14c19fd95799_local_15_oxysensor2_volt')|float(0.5) %}
+              {% set o2_ok = 0.05 < o2v < 0.95 %}
+              {% set pre = states('sensor.car_catalyst_pre_temp')|float(0) %}
+              {% set post = states('sensor.car_catalyst_post_temp')|float(0) %}
+              ## {{ '🟢 O2 Sensors Normal' if (ratio_ok and o2_ok) else '🟡 O2 Sensors — Check' }}
+
+              Upstream fuel-air ratio: {{ ratio }} (target ~1.0) {{ '🟢' if ratio_ok else '🟡' }}
+
+              Downstream O2 voltage: {{ o2v }} V {{ '🟢' if o2_ok else '🟡' }} — pegged near
+              0V or 1V usually means a stuck/dead sensor.
+
+              Catalyst ΔT (pre − post): {{ (pre - post) | round(0) }}°F — informational only
+              (no hard alert, no factory spec on hand). A healthy converter usually runs
+              near or above pre-cat temp downstream; a widening gap over time is worth
+              watching given past cat issues.
+              {% endif %}
+          - type: entities
+            entities:
+              - entity: sensor.car_catalyst_pre_temp
+                name: Catalyst Pre-Temp (Bank 1)
+              - entity: sensor.car_catalyst_post_temp
+                name: Catalyst Post-Temp (Bank 1)
+      - type: grid
+        cards:
+          - type: heading
+            heading: Service Tracker
+          - type: entities
+            entities:
+              - entity: input_datetime.car_last_service_date
+                name: Last Service Date
+              - entity: input_number.car_last_service_odometer
+                name: Odometer at Last Service
+              - entity: input_number.car_service_interval_miles
+                name: Service Interval
+          # TODO once the odometer PID is fixed (currently reads ~15,276 mi vs
+          # actual ~41k): add a template sensor for miles-since-service
+          # (current odometer − car_last_service_odometer) and a due/overdue
+          # status card against car_service_interval_miles, same style as the
+          # Vehicle Health status card above.
