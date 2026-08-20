@@ -40,10 +40,6 @@ views:
               ## {{ ((states('sensor.garage_wican_14c19fd95799_local_2f_fueltanklevel')|float(0) / 100)
               * states('input_number.car_tank_capacity_gal')|float(0)
               * states('input_number.car_avg_mpg')|float(0)) | round(0) }} mi remaining
-
-              Based on {{ states('sensor.garage_wican_14c19fd95799_local_2f_fueltanklevel')|round(0) }}%
-              tank, {{ states('input_number.car_tank_capacity_gal') }} gal capacity,
-              {{ states('input_number.car_avg_mpg') }} avg MPG (adjustable in Settings → Helpers).
       - type: grid
         cards:
           - type: heading
@@ -62,6 +58,16 @@ views:
         cards:
           - type: heading
             heading: Vehicle Health
+          - type: markdown
+            content: >
+              {% set raw = states('sensor.garage_wican_14c19fd95799_local_01_monitorstatus')|int(0) %}
+              {% set mil_on = (raw // 128) == 1 %}
+              {% set dtc_count = raw % 128 %}
+              {% if not mil_on and dtc_count == 0 %}
+              ## 🟢 No Known Issues
+              {% else %}
+              ## 🔴 Check Engine — {{ dtc_count }} code{{ 's' if dtc_count != 1 else '' }}
+              {% endif %}
           - type: entities
             entities:
               - entity: sensor.garage_wican_14c19fd95799_local_05_enginecoolanttemp
