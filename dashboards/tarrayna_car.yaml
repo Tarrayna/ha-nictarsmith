@@ -1,38 +1,70 @@
 views:
   - type: sections
-    sections:
-      - type: grid
-        cards:
-          - type: heading
-            heading: New section
-          - type: gauge
-            entity: sensor.garage_wican_14c19fd95799_local_5b_hybrbatpackremlife
-            name: Hybrid Battery Level
-            needle: true
-            severity:
-              green: 40
-              yellow: 10
-              red: 0
-      - type: grid
-        cards:
-          - type: heading
-            heading: New section
-          - type: gauge
-            entity: sensor.garage_wican_14c19fd95799_local_2f_fueltanklevel
-            name:
-              type: entity
-            needle: true
-            severity:
-              green: 25
-              yellow: 10
-              red: 0
-      - type: grid
-        cards:
-          - type: heading
-            heading: New section
     header:
       card:
         type: markdown
         content: |
           # Hello {{ user }}
           Here is the status of Tarrayna's Car
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: At a Glance
+          - type: gauge
+            entity: sensor.garage_wican_14c19fd95799_local_soc
+            name: Battery
+            needle: true
+            severity:
+              green: 40
+              yellow: 10
+              red: 0
+          - type: gauge
+            entity: sensor.garage_wican_14c19fd95799_local_2f_fueltanklevel
+            name: Gas
+            needle: true
+            severity:
+              green: 25
+              yellow: 10
+              red: 0
+          - type: tile
+            entity: sensor.garage_wican_14c19fd95799_local_odometer
+            name: Odometer
+            icon: mdi:counter
+      - type: grid
+        cards:
+          - type: heading
+            heading: Estimated Fuel Range
+          - type: markdown
+            content: >
+              ## {{ ((states('sensor.garage_wican_14c19fd95799_local_2f_fueltanklevel')|float(0) / 100)
+              * states('input_number.car_tank_capacity_gal')|float(0)
+              * states('input_number.car_avg_mpg')|float(0)) | round(0) }} mi remaining
+
+              Based on {{ states('sensor.garage_wican_14c19fd95799_local_2f_fueltanklevel')|round(0) }}%
+              tank, {{ states('input_number.car_tank_capacity_gal') }} gal capacity,
+              {{ states('input_number.car_avg_mpg') }} avg MPG (adjustable in Settings → Helpers).
+      - type: grid
+        cards:
+          - type: heading
+            heading: Battery & Charging
+          - type: entities
+            entities:
+              - entity: sensor.garage_wican_14c19fd95799_local_5b_hybrbatpackremlife
+                name: Battery Health (Remaining Life)
+              - entity: sensor.garage_wican_14c19fd95799_local_charger_connected
+                name: Charger Connected (1 = yes)
+              - entity: sensor.garage_wican_14c19fd95799_local_charging
+                name: Charging (1 = yes)
+              - entity: sensor.garage_wican_14c19fd95799_local_charging_dc
+                name: DC Fast Charging (1 = yes)
+      - type: grid
+        cards:
+          - type: heading
+            heading: Vehicle Health
+          - type: entities
+            entities:
+              - entity: sensor.garage_wican_14c19fd95799_local_05_enginecoolanttemp
+                name: Engine Coolant Temp
+              - entity: sensor.wican_14c19fd95799_local_batt_voltage
+                name: 12V Battery Voltage
