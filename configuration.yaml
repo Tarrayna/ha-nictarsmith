@@ -9,3 +9,12 @@ frontend:
 automation: !include_dir_merge_list automations/
 script: !include scripts.yaml
 scene: !include scenes.yaml
+
+lovelace:
+  dashboards:
+    tarrayna-car:
+      mode: yaml
+      title: Tarrayna's Car
+      icon: mdi:car
+      show_in_sidebar: true
+      filename: dashboards/tarrayna_car.yaml

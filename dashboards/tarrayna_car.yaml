@@ -1,0 +1,38 @@
+views:
+  - type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: New section
+          - type: gauge
+            entity: sensor.garage_wican_14c19fd95799_local_5b_hybrbatpackremlife
+            name: Hybrid Battery Level
+            needle: true
+            severity:
+              green: 40
+              yellow: 10
+              red: 0
+      - type: grid
+        cards:
+          - type: heading
+            heading: New section
+          - type: gauge
+            entity: sensor.garage_wican_14c19fd95799_local_2f_fueltanklevel
+            name:
+              type: entity
+            needle: true
+            severity:
+              green: 25
+              yellow: 10
+              red: 0
+      - type: grid
+        cards:
+          - type: heading
+            heading: New section
+    header:
+      card:
+        type: markdown
+        content: |
+          # Hello {{ user }}
+          Here is the status of Tarrayna's Car

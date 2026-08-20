@@ -23,12 +23,20 @@ using assist_satellite.ask_question, general notification automations.
 - automations/ — yes, freely (see "Automations file layout" below)
 - scripts.yaml — yes, freely
 - scenes.yaml — yes, with confirmation for anything affecting more than one room
+- dashboards/ (Lovelace, YAML mode) — yes, freely for single-dashboard edits;
+  confirmation for anything affecting the default Overview dashboard or a
+  dashboard shared across the household (same bar as scenes.yaml)
 - configuration.yaml — ONLY with explicit confirmation before editing; this
   file can break the whole HA instance if malformed
 - secrets.yaml — NEVER read, write, or display contents. If a secret is
   needed, tell the user to add it manually and reference the key name only.
 - blueprints/ — yes, freely
-- Any .db, .log, deps/, tts/ files — never touch, these are runtime data
+- Any .db, .log, deps/, tts/ files — never edit/delete, these are runtime
+  data. Reading logs for diagnosis is fine (standing permission) - but note
+  home-assistant.log isn't actually present on this mounted share and
+  /api/error_log returns 404, so log-based diagnosis is limited to what
+  /api/logbook exposes (state-transition events, not raw error/debug
+  output). Deeper log access needs the HA UI (Settings → System → Logs).
 
 ## Automations file layout
 Automations no longer live in a single automations.yaml. configuration.yaml
@@ -46,6 +54,24 @@ merges every *.yaml file in that directory into one automation list.
 - When "migrating" an automation out of poc.yaml, cut its entry from
   poc.yaml and paste it into the appropriate group file in the same edit
   — don't leave duplicates in both places.
+
+## Dashboards
+Dashboards run in Lovelace YAML mode: one file per dashboard under
+`dashboards/`, referenced from a `lovelace:` block in configuration.yaml
+(the block registers each dashboard's url_path/title/icon and points it at
+its file — that registration part is a configuration.yaml edit, so it needs
+confirmation like any other configuration.yaml change). Storing dashboards
+as files instead of in `.storage/lovelace*` is what makes them editable and
+git-backed like everything else here.
+
+- When building or editing a dashboard, favor reusable pieces over one-off
+  duplication: template/helper entities (input_boolean, input_number,
+  template sensors, etc.) behind card conditions rather than hardcoding
+  per-card logic, and consistent, repeated card/section structures instead
+  of copy-pasted one-off blocks, so a change in one place propagates.
+- If a dashboard needs a new helper entity that doesn't exist yet, flag it
+  rather than assuming — creating helpers may itself need a
+  configuration.yaml edit or a user action in Settings → Helpers.
 
 ## Naming conventions
 - Automation IDs: snake_case, prefixed by area/device
@@ -86,6 +112,58 @@ merges every *.yaml file in that directory into one automation list.
   the user to. If configuration.yaml was touched, HA needs a full restart —
   tell the user and get confirmation before restarting (same as the
   confirmation needed to edit configuration.yaml in the first place).
+
+## assist_satellite.ask_question gotchas
+Built while debugging the xbox_downstairs_lights_prompt automation
+(2026-07-12). Read this before building anything else with ask_question.
+
+- **Never call `assist_satellite.ask_question` directly inside an
+  automation's `actions`.** There's a known HA core bug where it can
+  silently hang forever - the automation trace shows "running"
+  indefinitely, nothing appears in the log. Community-confirmed fix: put
+  the ask_question call inside a **script**, and have the automation just
+  call that script. See `script.xbox_ask_downstairs_lights_prompt` in
+  scripts.yaml for the working pattern. Related upstream issues:
+  github.com/home-assistant/core/issues/151589, #142363, #160806, #149584.
+- **The matched answer's `id` is top-level on the response dict, not
+  nested under a `response` key.** With `response_variable: my_response`,
+  the correct check is `{{ my_response.get('id') == 'yes' }}` — NOT
+  `{{ my_response.response.id == 'yes' }}`. The nested form throws
+  `UndefinedError: 'dict object' has no attribute 'response'` on a
+  successful match (confirmed via our own trace error) even though some
+  official-looking examples suggest the nested form. Always use `.get('id')`
+  rather than direct attribute access, since the key is absent entirely on
+  timeout/no-match (not just null) - direct access crashes the template in
+  that case.
+- **`preannounce` plays before the spoken `question`, not before
+  listening.** There's no built-in "now listening" chime. If you want a
+  distinct cue for when to start answering, you'd need to either split into
+  `assist_satellite.announce` (preannounce: false, speaks the question)
+  followed by `assist_satellite.ask_question` with a short non-empty
+  filler question and preannounce:true (empty `question: ""` risked
+  hanging the TTS call - use a real short word instead), or accept there's
+  no such cue for now. We reverted this idea for the Xbox automation to
+  keep the working version simple - revisit if it comes up again.
+- **Known intermittent audio-capture issue on Voice PE**: even with the
+  above fixed, the "listening" state that opens after the question
+  (no wake word involved) sometimes captures zero speech regardless of
+  listening-window length (confirmed up to 12s, standing right next to the
+  device, no background noise). Wake-word-triggered listening ("Hey
+  Jarvis...") works reliably on the same hardware, so this is isolated to
+  the no-wake-word continue-listening path specifically - looks like an
+  upstream/firmware reliability issue, not something fixable from config.
+  `select.<device>_finished_speaking_detection` (options: default/
+  relaxed/aggressive) controls how long it waits, but doesn't fix
+  zero-capture cases. If this keeps blocking a use case, the fallback is
+  to have the satellite announce and rely on a normal wake-word follow-up
+  command instead of ask_question's continue-listening.
+- **A generic reusable `script.ask_question` wrapper was tried and
+  reverted** (2026-07-12) in favor of keeping ask_question calls inline in
+  each purpose-built script. Not because the wrapper was broken - it
+  worked structurally - but to keep the one proven-working version
+  isolated while the intermittent capture issue above is still
+  unresolved. Revisit building a shared helper once ask_question is
+  reliably working end-to-end.
 
 ## Reload automations after changes
 - A long-lived access token is stored at `~/.ha_token` (chmod 600). Do not
