@@ -41,7 +41,7 @@ input_number:
     min: 1000
     max: 20000
     step: 500
-    initial: 7500
+    initial: 10000
     unit_of_measurement: mi
 
 input_datetime:
