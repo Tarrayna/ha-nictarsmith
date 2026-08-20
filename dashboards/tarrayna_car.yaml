@@ -110,6 +110,11 @@ views:
         cards:
           - type: heading
             heading: Service Tracker
+          - type: markdown
+            content: >
+              {% set target = states('input_number.car_last_service_odometer')|float(0)
+              + states('input_number.car_service_interval_miles')|float(0) %}
+              ## Next Service Due at {{ '{:,.0f}'.format(target) }} mi
           - type: entities
             entities:
               - entity: input_datetime.car_last_service_date
@@ -118,8 +123,10 @@ views:
                 name: Odometer at Last Service
               - entity: input_number.car_service_interval_miles
                 name: Service Interval
-          # TODO once the odometer PID is fixed (currently reads ~15,276 mi vs
-          # actual ~41k): add a template sensor for miles-since-service
-          # (current odometer − car_last_service_odometer) and a due/overdue
-          # status card against car_service_interval_miles, same style as the
-          # Vehicle Health status card above.
+          # "Next Service Due" above is last-service odometer + interval only -
+          # a fixed target, not compared against the live odometer (that PID
+          # currently reads ~15,276 mi vs actual ~41k, see TODO below).
+          #
+          # TODO once the odometer PID is fixed: add a "miles remaining" /
+          # overdue status card comparing the live odometer against this
+          # target, same green/yellow/red style as the Vehicle Health card.
