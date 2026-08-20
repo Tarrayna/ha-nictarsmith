@@ -43,17 +43,11 @@ views:
       - type: grid
         cards:
           - type: heading
-            heading: Battery & Charging
+            heading: Battery Health
           - type: entities
             entities:
               - entity: sensor.garage_wican_14c19fd95799_local_5b_hybrbatpackremlife
                 name: Battery Health (Remaining Life)
-              - entity: sensor.garage_wican_14c19fd95799_local_charger_connected
-                name: Charger Connected (1 = yes)
-              - entity: sensor.garage_wican_14c19fd95799_local_charging
-                name: Charging (1 = yes)
-              - entity: sensor.garage_wican_14c19fd95799_local_charging_dc
-                name: DC Fast Charging (1 = yes)
       - type: grid
         cards:
           - type: heading
