@@ -1,0 +1,41 @@
+# OFFICE AUTOMATIONS
+
+- id: office_prusa_printer_power_off_night
+  alias: Office - Prusa printer power off at night
+  description: >-
+    At 10PM, turns off power to the Prusa Core One (via the Tarrayna power
+    strip switch 1) unless it's currently busy or printing.
+  triggers:
+    - trigger: time
+      at: "22:00:00"
+  conditions:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: sensor.office_prusa_core_one_l
+          state: "busy"
+        - condition: state
+          entity_id: sensor.office_prusa_core_one_l
+          state: "printing"
+  actions:
+    # Tarrayna power strip, switch 1 = Prusa Core One printer
+    - action: switch.turn_off
+      target:
+        entity_id: switch.office_tarrayna_switch_switch_1
+  mode: single
+
+- id: office_prusa_printer_power_on_morning
+  alias: Office - Prusa printer power on in the morning
+  description: >-
+    At 7AM, turns power back on to the Prusa Core One (via the Tarrayna
+    power strip switch 1).
+  triggers:
+    - trigger: time
+      at: "07:00:00"
+  conditions: []
+  actions:
+    # Tarrayna power strip, switch 1 = Prusa Core One printer
+    - action: switch.turn_on
+      target:
+        entity_id: switch.office_tarrayna_switch_switch_1
+  mode: single

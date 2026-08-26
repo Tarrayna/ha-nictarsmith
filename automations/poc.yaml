@@ -59,3 +59,48 @@
         rgb_color: [128, 0, 128]
     - set_conversation_response: "Purple it is."
   mode: single
+
+- id: xbox_downstairs_lights_prompt
+  alias: Xbox - Ask to turn off downstairs lights when gaming starts
+  description: >-
+    When Nick or Tarrayna starts playing on the living room Xbox, Tarrayna's
+    voice satellite asks whether to turn off all downstairs lights. v1 POC:
+    yes/no only, no per-room answer parsing yet.
+  triggers:
+    # MissN7 (Tarrayna) and Saveth303 (Nick) "in game" presence sensors
+    - trigger: state
+      entity_id: binary_sensor.living_room_xbox_in_game
+      to: "on"
+    - trigger: state
+      entity_id: binary_sensor.saveth303_in_game
+      to: "on"
+  conditions:
+    # Only bother asking if at least one downstairs light is already on
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: light.living_room_living_room
+          state: "on"
+        - condition: state
+          entity_id: light.living_room_living_room_main_lights
+          state: "on"
+        - condition: state
+          entity_id: light.game_room_game_room
+          state: "on"
+        - condition: state
+          entity_id: light.rec_room_rec_room_main_lights
+          state: "on"
+        - condition: state
+          entity_id: light.stairs_stairs_main_lights
+          state: "on"
+        - condition: state
+          entity_id: light.downstairs_hallway_downstairs_hallway_main_lights
+          state: "on"
+        - condition: state
+          entity_id: light.wetbar_wetbar_main_lights
+          state: "on"
+  actions:
+    # ask_question lives in script.xbox_ask_downstairs_lights_prompt, not
+    # inline here - see that script for why
+    - action: script.xbox_ask_downstairs_lights_prompt
+  mode: single
