@@ -1,0 +1,47 @@
+- id: chores_due_reminder_twice_daily
+  alias: Chores - due/overdue reminder (morning + afternoon)
+  description: >-
+    Runs the chores_due_reminder script at 8:00 AM and 3:00 PM to notify
+    Tarrayna's phone of any Todoist to-do items due today or overdue.
+  triggers:
+    - trigger: time
+      at: "08:00:00"
+    - trigger: time
+      at: "15:00:00"
+  actions:
+    - action: script.chores_due_reminder
+  mode: single
+
+- id: chores_mark_done_from_notification
+  alias: Chores - mark done from notification action
+  description: >-
+    Handles the "Mark done" action button on chores due/overdue
+    notifications (sent by script.chores_due_reminder) - completes the
+    matching Todoist item and clears that notification. Action id format
+    is "CHORES_MARK_DONE|<todo entity_id>|<item uid>", set when the
+    notification is sent.
+  triggers:
+    - trigger: event
+      event_type: mobile_app_notification_action
+  conditions:
+    - condition: template
+      value_template: >-
+        {{ trigger.event.data.action is defined and trigger.event.data.action.startswith('CHORES_MARK_DONE|') }}
+  actions:
+    - variables:
+        action_parts: "{{ trigger.event.data.action.split('|') }}"
+        item_entity_id: "{{ action_parts[1] }}"
+        item_uid: "{{ action_parts[2] }}"
+    - action: todo.update_item
+      target:
+        entity_id: "{{ item_entity_id }}"
+      data:
+        item: "{{ item_uid }}"
+        status: completed
+    - action: notify.mobile_app_pixel_8_pro
+      data:
+        message: "clear_notification"
+        data:
+          tag: "chores_due_{{ item_uid }}"
+  mode: parallel
+  max: 10

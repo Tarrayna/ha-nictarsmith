@@ -1,0 +1,206 @@
+xbox_ask_downstairs_lights_prompt:
+  alias: Xbox - Ask downstairs lights prompt
+  description: >-
+    Asks (via Tarrayna's voice satellite) whether to turn off all downstairs
+    lights, then turns them off on a "yes". Lives in its own script (not
+    inline in the automation) because assist_satellite.ask_question run
+    directly inside an automation has a known HA bug where it can silently
+    hang. See CLAUDE.md "assist_satellite.ask_question gotchas" for the
+    full writeup of issues hit building this.
+  sequence:
+    - action: assist_satellite.ask_question
+      target:
+        entity_id: assist_satellite.office_tarrayna_s_assistant
+      data:
+        question: "Looks like someone started gaming. Want me to turn off the downstairs lights?"
+        preannounce: false
+        answers:
+          - id: "yes"
+            sentences:
+              - "yes"
+              - "yeah"
+              - "sure"
+              - "turn them off"
+              - "turn off the lights"
+          - id: "no"
+            sentences:
+              - "no"
+              - "nope"
+              - "leave them on"
+              - "leave them"
+      response_variable: light_prompt_response
+    - if:
+        - condition: template
+          # id is top-level on the response dict, not nested under a
+          # "response" key - see CLAUDE.md writeup
+          value_template: "{{ light_prompt_response.get('id') == 'yes' }}"
+      then:
+        - action: light.turn_off
+          target:
+            entity_id:
+              # Living Room (Hue group + separate Lutron main lights)
+              - light.living_room_living_room
+              - light.living_room_living_room_main_lights
+              # Game Room (Hue group covers all 4 lights)
+              - light.game_room_game_room
+              # Single main-lights entity per remaining downstairs area
+              - light.rec_room_rec_room_main_lights
+              - light.stairs_stairs_main_lights
+              - light.downstairs_hallway_downstairs_hallway_main_lights
+              - light.wetbar_wetbar_main_lights
+  mode: single
+
+chores_due_reminder:
+  alias: Chores - due/overdue reminder
+  description: >-
+    Pages through Todoist's REST API directly (rest_command.todoist_get_active_tasks
+    in configuration.yaml), NOT HA's todo.* entities - discovered 2026-09-24
+    that HA's Todoist integration only shows the 20 parent "habit tracker"
+    tasks in Chores (all due: null) and silently drops their subtasks,
+    which carry the real due dates. Direct API access also exposes
+    responsible_uid (assignee), which HA's todo platform doesn't surface
+    at all, so this filters to tasks assigned to Tarrayna (13469637) or
+    unassigned - Nicholas's (7504617) are excluded.
+    Sends one notification PER ITEM (not aggregated text - wanted
+    individually actionable so each can be signed off with its own
+    "Mark done" button), but uses Android's notification "group" feature
+    to bundle them into exactly two stacked bubbles - one for overdue,
+    one for due today - each with its own group-summary header
+    notification, instead of ~27 separate top-level notifications
+    cluttering the shade. "Mark done" fires
+    chores_mark_done_from_notification (automations/chores.yaml), which
+    closes the task via rest_command.todoist_close_task - Todoist's own
+    API correctly advances a recurring task to its next occurrence,
+    unlike HA's todo.update_item (home-assistant/core#107504).
+  sequence:
+    - variables:
+        today: "{{ now().strftime('%Y-%m-%d') }}"
+        tarrayna_id: "13469637"
+        cursor: ""
+        all_tasks: []
+        more_pages: true
+    - repeat:
+        while:
+          - condition: template
+            value_template: "{{ more_pages }}"
+        sequence:
+          - action: rest_command.todoist_get_active_tasks
+            data:
+              cursor: "{{ cursor }}"
+            response_variable: page_response
+          - variables:
+              page_content: >-
+                {{ page_response.content | from_json if page_response.content is string else page_response.content }}
+              all_tasks: "{{ all_tasks + page_content.results }}"
+              cursor: "{{ page_content.next_cursor or '' }}"
+              more_pages: "{{ (page_content.next_cursor or '') != '' }}"
+    - variables:
+        mine_due: >-
+          {% set ns = namespace(items=[]) %}
+          {% for task in all_tasks %}
+            {% if task.due is not none and task.due.date is defined and task.due.date <= today
+                  and (task.responsible_uid is none or task.responsible_uid == tarrayna_id) %}
+              {% set ns.items = ns.items + [{
+                'id': task.id,
+                'content': task.content,
+                'due_date': task.due.date,
+                'overdue': task.due.date < today
+              }] %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.items }}
+        overdue_items: "{{ mine_due | selectattr('overdue') | list }}"
+        due_today_items: "{{ mine_due | rejectattr('overdue') | list }}"
+    # Clear every per-item tag before resending fresh. Several items from
+    # early test runs (before the "group" key was added to these
+    # notifications) got stuck permanently outside their bubble - Android
+    # doesn't reliably re-parent an existing notification into a group
+    # just because a later update sets group on it. Cancelling first
+    # forces a clean repost every run instead of an in-place update, so
+    # this can't recur for any item going forward (see 2026-09-24 - hit
+    # this repeatedly, one item at a time, before making it systematic)
+    - repeat:
+        for_each: "{{ mine_due }}"
+        sequence:
+          - action: notify.mobile_app_pixel_8_pro
+            data:
+              message: "clear_notification"
+              data:
+                tag: "chores_due_{{ repeat.item.id }}"
+    - delay:
+        milliseconds: 500
+    - if:
+        - condition: template
+          value_template: "{{ overdue_items | length > 0 }}"
+      then:
+        # Sent FIRST (not last) to establish the group before any
+        # individual items post - with the header sent last, the very
+        # first individual notification of each run consistently showed
+        # up outside the bubble on its own (confirmed 2026-09-24, likely
+        # push-delivery ordering not guaranteeing the group is
+        # "established" before that first item renders). NOT
+        # group_summary: true - that flag hides the notification once the
+        # group is expanded (only shows collapsed) - see the reload
+        # comment history in this file for the full back-and-forth.
+        - action: notify.mobile_app_pixel_8_pro
+          data:
+            title: "{{ overdue_items | length }} chores overdue"
+            message: "{{ overdue_items | map(attribute='content') | join(', ') }}"
+            data:
+              channel: Chores Due
+              tag: chores_overdue_summary
+              group: chores_overdue
+        - delay:
+            milliseconds: 400
+        - repeat:
+            for_each: "{{ overdue_items }}"
+            sequence:
+              - action: notify.mobile_app_pixel_8_pro
+                data:
+                  title: "{{ repeat.item.content }}"
+                  message: "Overdue since {{ repeat.item.due_date }}"
+                  data:
+                    channel: Chores Due
+                    tag: "chores_due_{{ repeat.item.id }}"
+                    group: chores_overdue
+                    actions:
+                      - action: "CHORES_MARK_DONE_REST|{{ repeat.item.id }}"
+                        title: "Mark done"
+              # Firing ~25+ pushes back to back with no gap got some
+              # silently dropped by Android/FCM rate limiting (confirmed
+              # 2026-09-24 - summary said 25, only 16 landed, one due-today
+              # item never arrived at all) - spacing them out avoids that
+              - delay:
+                  milliseconds: 400
+    - if:
+        - condition: template
+          value_template: "{{ due_today_items | length > 0 }}"
+      then:
+        # Sent first - see comment on the overdue block above
+        - action: notify.mobile_app_pixel_8_pro
+          data:
+            title: "{{ due_today_items | length }} chores due today"
+            message: "{{ due_today_items | map(attribute='content') | join(', ') }}"
+            data:
+              channel: Chores Due
+              tag: chores_due_today_summary
+              group: chores_due_today
+        - delay:
+            milliseconds: 400
+        - repeat:
+            for_each: "{{ due_today_items }}"
+            sequence:
+              - action: notify.mobile_app_pixel_8_pro
+                data:
+                  title: "{{ repeat.item.content }}"
+                  message: "Due today"
+                  data:
+                    channel: Chores Due
+                    tag: "chores_due_{{ repeat.item.id }}"
+                    group: chores_due_today
+                    actions:
+                      - action: "CHORES_MARK_DONE_REST|{{ repeat.item.id }}"
+                        title: "Mark done"
+              - delay:
+                  milliseconds: 400
+  mode: single

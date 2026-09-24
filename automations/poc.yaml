@@ -104,3 +104,252 @@
     # inline here - see that script for why
     - action: script.xbox_ask_downstairs_lights_prompt
   mode: single
+
+- id: presence_partner_zone_notify
+  alias: Presence - Notify partner on zone arrival/departure (skip if together)
+  description: >-
+    Notifies whichever of Tarrayna/Nicholas didn't move when the other
+    arrives at or leaves Gym, HP Office, Daycare, or Home. Skipped when
+    both of you are together (arriving to/leaving from the same place at
+    the same time).
+  triggers:
+    # person.nictarsmith = Tarrayna, person.nicholas = Nicholas
+    - trigger: state
+      entity_id:
+        - person.nictarsmith
+        - person.nicholas
+  conditions:
+    # Only care about transitions into/out of the four tracked zones, and
+    # ignore unknown/unavailable tracker states (e.g. Nicholas's tracker
+    # before his phone has reported a location at least once)
+    - condition: template
+      value_template: >-
+        {{ trigger.to_state.state not in ['unknown', 'unavailable'] and
+           trigger.from_state.state not in ['unknown', 'unavailable'] and
+           (trigger.to_state.state in ['home', 'pursuit_gym', 'hp_office', 'daycare'] or
+            trigger.from_state.state in ['home', 'pursuit_gym', 'hp_office', 'daycare']) }}
+  actions:
+    - variables:
+        tracked_zones: ["home", "pursuit_gym", "hp_office", "daycare"]
+        zone_names:
+          home: Home
+          pursuit_gym: Pursuit Gym
+          hp_office: HP Office
+          daycare: Daycare
+        this_person: "{{ trigger.entity_id }}"
+        this_name: "{{ 'Nicholas' if trigger.entity_id == 'person.nicholas' else 'Tarrayna' }}"
+        other_person: "{{ 'person.nicholas' if trigger.entity_id == 'person.nictarsmith' else 'person.nictarsmith' }}"
+        is_arrival: "{{ trigger.to_state.state in ['home', 'pursuit_gym', 'hp_office', 'daycare'] }}"
+        event_zone: >-
+          {{ trigger.to_state.state if trigger.to_state.state in ['home', 'pursuit_gym', 'hp_office', 'daycare']
+             else trigger.from_state.state }}
+    # Give both trackers a chance to settle so simultaneous departures
+    # (e.g. driving off together) don't both fire a notification
+    - delay:
+        seconds: 15
+    - variables:
+        other_state_now: "{{ states(other_person) }}"
+        other_recent_change: "{{ (now() - states[other_person].last_changed).total_seconds() < 20 }}"
+        skip_together: >-
+          {{ (is_arrival and other_state_now == event_zone) or
+             ((not is_arrival) and other_state_now != event_zone and other_recent_change) }}
+    - if:
+        - condition: template
+          value_template: "{{ not skip_together }}"
+      then:
+        - action: >-
+            notify.{{ 'mobile_app_pixel_9' if other_person == 'person.nicholas' else 'mobile_app_pixel_8_pro' }}
+          data:
+            title: "{{ this_name }} {{ 'arrived at' if is_arrival else 'left' }} {{ zone_names[event_zone] }}"
+            message: >-
+              {{ this_name }} just {{ 'arrived at' if is_arrival else 'left' }} {{ zone_names[event_zone] }}.
+            data:
+              channel: Presence
+  mode: parallel
+  max: 10
+
+- id: laundry_washer_finished_notify
+  alias: Laundry - Washer finished, notify + escalate
+  description: >-
+    Notifies Tarrayna when the washer finishes. Holds off if the dryer is
+    still running (nothing to move it into yet), then nags with a
+    dismissible notification every 15 min, escalating to a louder channel
+    and looping in Nicholas after 1 hr unacknowledged. Paused 10pm-7am.
+  triggers:
+    # Trigger on the entity's state (a timestamp - changes every event),
+    # not the event_type attribute directly: HA's "event" entities repeat
+    # the same event_type across cycles, and an attribute-watching state
+    # trigger only fires on an actual VALUE change, so it silently stops
+    # firing after the first "washing_is_complete" (see 2026-09-24
+    # debugging - this is what broke the second real cycle)
+    - trigger: state
+      entity_id: event.front_load_washer_notification
+  conditions:
+    - condition: template
+      value_template: "{{ trigger.to_state.attributes.get('event_type') == 'washing_is_complete' }}"
+  actions:
+    - variables:
+        # Read from the event entity's own state (the timestamp LG
+        # reported), not now() at trigger time. Epoch float, not a raw
+        # datetime - datetimes don't survive the round-trip through the
+        # automation variable store (they come back as strings, and
+        # `now() - "a string"` throws TypeError and silently kills the
+        # whole run - see 2026-09-24 debugging). Reading from entity state
+        # also means a manual re-trigger after an automation/reload (which
+        # cancels any in-flight run automation-wide) still recovers the
+        # true original completion time instead of restarting the clock
+        # at zero - see the 2026-09-24 "79 minutes, no follow-up" incident
+        washer_done_at: "{{ as_timestamp(states('event.front_load_washer_notification')) }}"
+        partner_notified: false
+    - repeat:
+        while:
+          - condition: template
+            value_template: "true"
+        sequence:
+          - variables:
+              elapsed_min: "{{ ((as_timestamp(now()) - washer_done_at) / 60) | round(0) }}"
+              is_quiet_hours: "{{ now().hour >= 22 or now().hour < 7 }}"
+              is_urgent_tier: "{{ ((as_timestamp(now()) - washer_done_at) / 60) >= 60 }}"
+              is_concerning: "{{ ((as_timestamp(now()) - washer_done_at) / 60) >= 30 }}"
+              is_home: "{{ states('person.nictarsmith') == 'home' }}"
+              nicholas_home: "{{ states('person.nicholas') == 'home' }}"
+              # Rechecked every 15 min, not just once up front - if the
+              # dryer wasn't actually dry and gets re-run partway through
+              # the wait, this catches it instead of telling you to move
+              # wash into a dryer that's running again
+              is_dryer_busy: "{{ states('sensor.dryer_current_status') in ['running', 'cooling', 'wrinkle_care', 'pause'] }}"
+          # Only actually ping Tarrayna if she's home to act on it, it's
+          # not quiet hours, and the dryer's actually free right now - but
+          # the elapsed-time clock above keeps running regardless, so the
+          # message always reflects true time sitting in the washer once
+          # resumed
+          - if:
+              - condition: template
+                value_template: "{{ not is_quiet_hours and is_home and not is_dryer_busy }}"
+            then:
+              - action: notify.mobile_app_pixel_8_pro
+                data:
+                  title: >-
+                    {{ '😞 ' if is_concerning else '' }}Laundry's still in the washer
+                  message: >-
+                    {% if is_urgent_tier %}
+                    😞 Laundry's been in the washer for {{ elapsed_min }} min - much longer and you'll need to re-run the cycle.
+                    {% elif is_concerning %}
+                    😞 Laundry's been sitting in the washer for {{ elapsed_min }} min.
+                    {% else %}
+                    Laundry's been sitting in the washer for {{ elapsed_min }} min.
+                    {% endif %}
+                  data:
+                    channel: "{{ 'Chores Urgent' if is_urgent_tier else 'Chores' }}"
+                    sticky: "true"
+                    tag: laundry_washer
+                    actions:
+                      - action: LAUNDRY_WASHER_MOVED
+                        title: "Mark as moved"
+          # Partner escalation runs on the same 1-hr clock regardless of
+          # whether Tarrayna is home - but no point pinging Nicholas if
+          # he's not home, or the dryer's busy and neither of them could
+          # act on it anyway; keeps rechecking each loop until conditions
+          # actually allow someone to do something about it
+          - if:
+              - condition: template
+                value_template: >-
+                  {{ not is_quiet_hours and is_urgent_tier and not partner_notified and nicholas_home and not is_dryer_busy }}
+            then:
+              - action: notify.mobile_app_pixel_9
+                data:
+                  title: "Laundry check"
+                  message: >-
+                    Tarrayna hasn't moved the wash out of the washer in {{ elapsed_min }} min - mind checking?
+                  data:
+                    channel: Chores
+              - variables:
+                  partner_notified: true
+          - wait_for_trigger:
+              - trigger: event
+                event_type: mobile_app_notification_action
+                event_data:
+                  action: LAUNDRY_WASHER_MOVED
+            timeout: "00:15:00"
+          - if:
+              - condition: template
+                value_template: "{{ wait.trigger is not none }}"
+            then:
+              # Sticky notifications don't clear themselves just because
+              # the action button was tapped - tell the phone to remove it
+              - action: notify.mobile_app_pixel_8_pro
+                data:
+                  message: "clear_notification"
+                  data:
+                    tag: laundry_washer
+              - stop: "Acknowledged"
+  mode: restart
+
+- id: laundry_dryer_finished_notify
+  alias: Laundry - Dryer finished, notify + resend
+  description: >-
+    Notifies Tarrayna when the dryer finishes, resending every 15 min
+    (escalating to a louder channel after 1 hr) until dismissed. Mentions
+    the washer too if it's still sitting full. No partner escalation - this
+    one just keeps nagging Tarrayna. Paused 10pm-7am.
+  triggers:
+    # Trigger on the entity's state (a timestamp), not the event_type
+    # attribute - see the comment on the washer trigger for why
+    - trigger: state
+      entity_id: event.dryer_notification
+  conditions:
+    - condition: template
+      value_template: "{{ trigger.to_state.attributes.get('event_type') == 'drying_is_complete' }}"
+  actions:
+    - variables:
+        # Read from the event entity's own state, not now() - see the
+        # comment on washer_done_at in laundry_washer_finished_notify for
+        # why (epoch float round-trip, and reload-survival)
+        dryer_done_at: "{{ as_timestamp(states('event.dryer_notification')) }}"
+    - repeat:
+        while:
+          - condition: template
+            value_template: "true"
+        sequence:
+          - variables:
+              elapsed_min: "{{ ((as_timestamp(now()) - dryer_done_at) / 60) | round(0) }}"
+              is_quiet_hours: "{{ now().hour >= 22 or now().hour < 7 }}"
+              is_urgent_tier: "{{ ((as_timestamp(now()) - dryer_done_at) / 60) >= 60 }}"
+              washer_still_full: "{{ states('sensor.front_load_washer_current_status') == 'end' }}"
+              is_home: "{{ states('person.nictarsmith') == 'home' }}"
+          # Elapsed-time clock keeps running while away - only the actual
+          # ping is held back until she's home and it's not quiet hours
+          - if:
+              - condition: template
+                value_template: "{{ not is_quiet_hours and is_home }}"
+            then:
+              - action: notify.mobile_app_pixel_8_pro
+                data:
+                  title: "Dryer's done"
+                  message: >-
+                    Clothes have been in the dryer for {{ elapsed_min }} min - grab them before they wrinkle!
+                    {{ ' Wash is also still sitting in the washer.' if washer_still_full else '' }}
+                  data:
+                    channel: "{{ 'Chores Urgent' if is_urgent_tier else 'Chores' }}"
+                    sticky: "true"
+                    tag: laundry_dryer
+                    actions:
+                      - action: LAUNDRY_DRYER_MOVED
+                        title: "Mark as unloaded"
+          - wait_for_trigger:
+              - trigger: event
+                event_type: mobile_app_notification_action
+                event_data:
+                  action: LAUNDRY_DRYER_MOVED
+            timeout: "00:15:00"
+          - if:
+              - condition: template
+                value_template: "{{ wait.trigger is not none }}"
+            then:
+              - action: notify.mobile_app_pixel_8_pro
+                data:
+                  message: "clear_notification"
+                  data:
+                    tag: laundry_dryer
+              - stop: "Acknowledged"
+  mode: restart

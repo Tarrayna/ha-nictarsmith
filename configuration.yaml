@@ -87,3 +87,38 @@ lovelace:
       icon: mdi:car
       show_in_sidebar: true
       filename: dashboards/tarrayna_car.yaml
+prometheus:
+  filter:
+    include_entity_globs:
+      - sensor.office_tarrayna_switch_*
+      - sensor.office_nick_smart_wi_fi_power_strip_*
+
+# Calls Todoist's own REST API directly (2026-09-24), bypassing HA's
+# Todoist integration - its todo.* entities don't sync due dates for
+# recurring tasks (confirmed via todo.get_items returning no "due" field
+# for any of the 20 recurring Chores items) and the legacy YAML sensor
+# platform that used to expose this no longer exists in this HA version
+# (homeassistant.components.todoist.sensor was removed). Used by
+# script.chores_due_reminder (scripts.yaml) to read due/overdue tasks,
+# and by automations/chores.yaml's chores_mark_done_from_notification to
+# close a task from its notification - closing via Todoist's own API
+# also avoids a known HA core bug where todo.update_item can delete an
+# entire recurring task series instead of completing just today's
+# occurrence (home-assistant/core#107504).
+rest_command:
+  todoist_get_active_tasks:
+    url: >-
+      https://api.todoist.com/api/v1/tasks{% if cursor is defined and cursor %}?cursor={{ cursor }}{% endif %}
+    method: GET
+    headers:
+      Authorization: !secret todoist_api_token
+  todoist_close_task:
+    url: "https://api.todoist.com/api/v1/tasks/{{ task_id }}/close"
+    method: POST
+    headers:
+      Authorization: !secret todoist_api_token
+  todoist_get_collaborators:
+    url: "https://api.todoist.com/api/v1/projects/{{ project_id }}/collaborators"
+    method: GET
+    headers:
+      Authorization: !secret todoist_api_token
