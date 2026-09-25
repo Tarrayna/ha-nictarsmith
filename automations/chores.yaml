@@ -16,32 +16,32 @@
   alias: Chores - mark done from notification action
   description: >-
     Handles the "Mark done" action button on chores due/overdue
-    notifications (sent by script.chores_due_reminder) - completes the
-    matching Todoist item and clears that notification. Action id format
-    is "CHORES_MARK_DONE|<todo entity_id>|<item uid>", set when the
-    notification is sent.
+    notifications (sent by script.chores_due_reminder) - closes the
+    matching Todoist task via rest_command.todoist_close_task and clears
+    that notification. Action id format is "CHORES_MARK_DONE_REST|<todoist
+    task id>", set when the notification is sent. Fixed 2026-09-24: this
+    automation was still matching the old "CHORES_MARK_DONE|<entity>|<uid>"
+    format and calling todo.update_item from before script.chores_due_reminder
+    was rewritten to hit Todoist's REST API directly - the condition never
+    matched the actual action id sent, so "Mark done" silently did nothing.
   triggers:
     - trigger: event
       event_type: mobile_app_notification_action
   conditions:
     - condition: template
       value_template: >-
-        {{ trigger.event.data.action is defined and trigger.event.data.action.startswith('CHORES_MARK_DONE|') }}
+        {{ trigger.event.data.action is defined and trigger.event.data.action.startswith('CHORES_MARK_DONE_REST|') }}
   actions:
     - variables:
         action_parts: "{{ trigger.event.data.action.split('|') }}"
-        item_entity_id: "{{ action_parts[1] }}"
-        item_uid: "{{ action_parts[2] }}"
-    - action: todo.update_item
-      target:
-        entity_id: "{{ item_entity_id }}"
+        item_id: "{{ action_parts[1] }}"
+    - action: rest_command.todoist_close_task
       data:
-        item: "{{ item_uid }}"
-        status: completed
+        task_id: "{{ item_id }}"
     - action: notify.mobile_app_pixel_8_pro
       data:
         message: "clear_notification"
         data:
-          tag: "chores_due_{{ item_uid }}"
+          tag: "chores_due_{{ item_id }}"
   mode: parallel
   max: 10
